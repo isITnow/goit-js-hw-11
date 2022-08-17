@@ -77,9 +77,7 @@ const options = {
 const observer = new IntersectionObserver(updateGallery, options);
 
 function updateGallery(entries) {
-    if (clientQuery === '') {
-        return;
-    }
+    console.log(entries);
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             page += 1;
@@ -92,7 +90,7 @@ function updateGallery(entries) {
                             "We're sorry, but you've reached the end of search results.",
                         );
                         refs.form.reset();
-                        clientQuery = '';
+                        observer.unobserve(refs.sentinel);
                     }
                 })
                 .catch(error => console.log(error.message));
@@ -111,7 +109,7 @@ function parseMarkup(arr) {
                 views,
                 comments,
                 downloads,
-            }) => `<div class="photo-card"><img src="${webformatURL}" alt="${tags}" loading="lazy" class="img"/>                            <div class="info">
+            }) => `<div class="photo-card"><img src="${webformatURL}" alt="${tags}" loading="lazy" class="img" height="400"/>                            <div class="info">
                             <p class="info-item">
                             <b>Likes</b>
                             ${likes}
