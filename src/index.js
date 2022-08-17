@@ -1,14 +1,14 @@
-import axios from 'axios';
+// import axios from 'axios';
 import Notiflix from 'notiflix';
 import { fetchGallery } from './fetchGallery.js';
-
-console.log('TESTING');
 
 const refs = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
   loadBtn: document.querySelector('.load-more'),
 };
+let page = 1;
+let clientQuery = '';
 
 refs.form.addEventListener('submit', onFormSubmit);
 
@@ -19,8 +19,7 @@ async function onFormSubmit(evt) {
   //   console.log(evt.target.searchQuery.value);
 
   try {
-    let page = 1;
-    const clientQuery = evt.target.searchQuery.value;
+    clientQuery = evt.target.searchQuery.value;
     const data = await fetchGallery(clientQuery, page);
     const dataArr = data.data.hits;
     if (dataArr.length === 0 || clientQuery === '') {
@@ -30,6 +29,9 @@ async function onFormSubmit(evt) {
       refs.form.reset();
       return;
     }
+
+    const totalImages = data.data.total;
+    Notiflix.Notify.success(`Hooray! We found ${totalImages} images.`);
     createMarkup(dataArr);
   } catch (error) {
     alert('ERROR');
@@ -41,6 +43,17 @@ async function onFormSubmit(evt) {
 //   console.log(data.data.totalHits);
 //   console.log(data.data.hits);
 // });
+
+refs.loadBtn.addEventListener('click', onLoadBtnClick);
+
+async function onLoadBtnClick(evt) {
+  try {
+    page += 1;
+    const data = await fetchGallery(clientQuery, page);
+    const dataArr = data.data.hits;
+    createMarkup(dataArr);
+  } catch (error) {}
+}
 
 function parseMarkup(arr) {
   return arr
