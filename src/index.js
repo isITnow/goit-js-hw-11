@@ -2,6 +2,8 @@ import axios from 'axios';
 import Notiflix from 'notiflix';
 import { fetchGallery } from './fetchGallery.js';
 
+console.log('TESTING');
+
 const refs = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
