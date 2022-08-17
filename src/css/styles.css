@@ -32,6 +32,7 @@ a {
 
 .search-wrapper {
     position: fixed;
+    z-index: 2;
     top: 0;
     left: 0;
     display: flex;
@@ -48,12 +49,20 @@ a {
     flex-wrap: wrap;
     gap: 8px;
     padding: 58px 8px 8px 8px;
+    margin-bottom: 15px;
 }
 
 .photo-card {
     width: calc((100% - 40px) / 4);
-    height: 450px;
-    outline: 1px solid red;
+    max-height: 450px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12),
+        0px 4px 4px rgba(0, 0, 0, 0.06),
+        1px 4px 6px rgba(0, 0, 0, 0.16);
+    transition: scale 250ms cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+.photo-card:hover {
+    scale: 1.02;
 }
 
 .img {
@@ -64,7 +73,7 @@ a {
 }
 
 .info {
-    width: 100%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -80,8 +89,11 @@ a {
 .load-more {
     display: block;
     margin: 0 auto;
+    color: #fafafa;
+    background-color: rgb(41, 41, 170);
 }
 
 .js__is-hidden {
     display: none;
+
 }

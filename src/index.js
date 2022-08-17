@@ -9,12 +9,6 @@ const refs = {
     gallery: document.querySelector('.gallery'),
     loadBtn: document.querySelector('.load-more'),
 };
-// const lightbox = new SimpleLightbox('.gallery a', {
-//     captions: true,
-//     captionsData: 'alt',
-//     captionPosition: 'bottom',
-//     captionDelay: 250,
-// });
 
 let page;
 let clientQuery = '';
@@ -32,6 +26,7 @@ async function onFormSubmit(evt) {
         const data = await fetchGallery(clientQuery, page);
         const dataArr = data.data.hits;
         if (dataArr.length === 0 || clientQuery === '') {
+            refs.loadBtn.classList.add('js__is-hidden');
             Notiflix.Notify.failure(
                 'Sorry, there are no images matching your search query. Please try again.',
             );
@@ -48,12 +43,6 @@ async function onFormSubmit(evt) {
     }
 }
 
-// fetchGallery('car', 1).then(data => {
-//   console.log(data);
-//   console.log(data.data.totalHits);
-//   console.log(data.data.hits);
-// });
-
 refs.loadBtn.addEventListener('click', onLoadBtnClick);
 
 async function onLoadBtnClick(evt) {
@@ -69,6 +58,7 @@ async function onLoadBtnClick(evt) {
                 "We're sorry, but you've reached the end of search results.",
             );
             refs.loadBtn.classList.add('js__is-hidden');
+            refs.form.reset();
         }
     } catch (error) {
         error => console.log(error.message);

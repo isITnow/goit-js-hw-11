@@ -10,15 +10,3 @@ async function fetchGallery(q, page) {
 }
 
 export { fetchGallery };
-
-// const fetchImages = async (searching, page) => {
-//     try {
-//         const response = await axios.get(
-//             `https://pixabay.com/api/?key=${API_KEY}&q=${searching}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${perPage}`,
-//         );
-//         console.log(response);
-//         return response.data;
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
