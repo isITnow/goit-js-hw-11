@@ -29,7 +29,9 @@ async function onFormSubmit(evt) {
         const dataArr = data.data.hits;
         observer.observe(refs.sentinel);
         if (dataArr.length === 0 || clientQuery === '') {
-            refs.loadBtn.classList.add('js__is-hidden');
+            observer.unobserve(refs.sentinel);
+
+            // refs.loadBtn.classList.add('js__is-hidden');
             Notiflix.Notify.failure(
                 'Sorry, there are no images matching your search query. Please try again.',
             );
@@ -77,7 +79,6 @@ const options = {
 const observer = new IntersectionObserver(updateGallery, options);
 
 function updateGallery(entries) {
-    console.log(entries);
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             page += 1;
