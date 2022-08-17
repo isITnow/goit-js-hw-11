@@ -26,6 +26,10 @@ input {
     border-radius: 5px;
 }
 
+a {
+    text-decoration: none;
+}
+
 .search-wrapper {
     position: fixed;
     top: 0;
@@ -42,27 +46,35 @@ input {
 .gallery {
     display: flex;
     flex-wrap: wrap;
-    margin: 58px -8px -8px -8px;
+    gap: 8px;
+    padding: 58px 8px 8px 8px;
 }
 
 .photo-card {
-    max-width: calc((100% - 40px) / 4);
-    height: 350px;
-    margin: 8px;
+    width: calc((100% - 40px) / 4);
+    height: 450px;
+    outline: 1px solid red;
 }
 
 .img {
     display: block;
     width: 100%;
-    height: 300;
+    height: 85%;
+    object-fit: cover;
 }
 
 .info {
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
-    padding: 5px 0;
+    padding: 5px;
     text-align: center;
-    font-size: 12px;
+    font-size: 18px;
+}
+
+.info-item {
+    padding: 8px;
 }
 
 .load-more {

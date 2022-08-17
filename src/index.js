@@ -1,12 +1,21 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import { fetchGallery } from './fetchGallery.js';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = {
     form: document.querySelector('#search-form'),
     gallery: document.querySelector('.gallery'),
     loadBtn: document.querySelector('.load-more'),
 };
+// const lightbox = new SimpleLightbox('.gallery a', {
+//     captions: true,
+//     captionsData: 'alt',
+//     captionPosition: 'bottom',
+//     captionDelay: 250,
+// });
+
 let page;
 let clientQuery = '';
 refs.loadBtn.classList.add('js__is-hidden');
@@ -53,8 +62,9 @@ async function onLoadBtnClick(evt) {
         const data = await fetchGallery(clientQuery, page);
         const dataArr = data.data.hits;
         createMarkup(dataArr);
+        // lightbox.refresh();
 
-        if (data.data.totalHits < page * perPge) {
+        if (data.data.totalHits < page * 40) {
             Notiflix.Notify.warning(
                 "We're sorry, but you've reached the end of search results.",
             );
@@ -77,26 +87,26 @@ function parseMarkup(arr) {
                 comments,
                 downloads,
             }) => `<div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" class="img"/>
+            <img src="${webformatURL}" alt="${tags}" loading="lazy" class="img"/>
   <div class="info">
-    <p class="info-item">
-      <b>Likes</b>
-      ${likes}
-    </p>
-    <p class="info-item">
-      <b>Views</b>
-      ${views}
-    </p>
-    <p class="info-item">
-      <b>Comments</b>
-      ${comments}
-    </p>
-    <p class="info-item">
-      <b>Downloads</b>
-      ${downloads}
-    </p>
+  <p class="info-item">
+  <b>Likes</b>
+  ${likes}
+  </p>
+  <p class="info-item">
+  <b>Views</b>
+  ${views}
+  </p>
+  <p class="info-item">
+  <b>Comments</b>
+  ${comments}
+  </p>
+  <p class="info-item">
+  <b>Downloads</b>
+  ${downloads}
+  </p>
   </div>
-</div>`,
+  </div>`,
         )
         .join('');
 }
