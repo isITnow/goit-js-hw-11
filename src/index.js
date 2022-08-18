@@ -7,13 +7,11 @@ import { fetchGallery } from './fetchGallery.js';
 const refs = {
     form: document.querySelector('#search-form'),
     gallery: document.querySelector('.gallery'),
-    loadBtn: document.querySelector('.load-more'),
     sentinel: document.querySelector('.js-sentinel'),
 };
 
 let page;
 let clientQuery = '';
-refs.loadBtn.classList.add('js__is-hidden');
 
 refs.form.addEventListener('submit', onFormSubmit);
 
@@ -25,13 +23,10 @@ async function onFormSubmit(evt) {
     try {
         clientQuery = evt.target.searchQuery.value;
         const data = await fetchGallery(clientQuery, page);
-        // console.log(data);
         const dataArr = data.data.hits;
         observer.observe(refs.sentinel);
         if (dataArr.length === 0 || clientQuery === '') {
             observer.unobserve(refs.sentinel);
-
-            // refs.loadBtn.classList.add('js__is-hidden');
             Notiflix.Notify.failure(
                 'Sorry, there are no images matching your search query. Please try again.',
             );
@@ -42,34 +37,10 @@ async function onFormSubmit(evt) {
         const totalImages = data.data.totalHits;
         Notiflix.Notify.success(`Hooray! We found ${totalImages} images.`);
         createMarkup(dataArr);
-        // refs.loadBtn.classList.remove('js__is-hidden');
     } catch (error) {
         error => console.log(error.message);
     }
 }
-//////////// LoadMore Bottun Variant  /////////////////////////////////////////////
-// refs.loadBtn.addEventListener('click', onLoadBtnClick);
-
-// async function onLoadBtnClick(evt) {
-//     try {
-//         page += 1;
-//         const data = await fetchGallery(clientQuery, page);
-//         const dataArr = data.data.hits;
-//         createMarkup(dataArr);
-//         observer.observe(refs.sentinel);
-
-//         if (data.data.totalHits < page * 40) {
-//             Notiflix.Notify.warning(
-//                 "We're sorry, but you've reached the end of search results.",
-//             );
-//             refs.loadBtn.classList.add('js__is-hidden');
-//             refs.form.reset();
-//         }
-//     } catch (error) {
-//         error => console.log(error.message);
-//     }
-// }
-//////////////////////////////////////////////////////////////////////////////////
 
 const options = {
     root: null,
